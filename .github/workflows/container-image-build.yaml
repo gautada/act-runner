@@ -1,3 +1,4 @@
+---
 name: Github Action - `dev` branch container build and integrate to `docker.io` repository 
 
 on:
@@ -30,14 +31,18 @@ jobs:
           
       - name: Repository registry login
         run: |
-          echo "${{ secrets.DOCKERIO_TOKEN }}" | /usr/bin/podman login --username "${{ secrets.DOCKERIO_REGISTRY }}" --password-stdin docker.io
+          echo "${{ secrets.DOCKERIO_TOKEN }}" | /usr/bin/podman login \
+            --username "${{ secrets.DOCKERIO_REGISTRY }}" --password-stdin docker.io
 
       - name: Build Container Image for aarch64 using Podman
         run: |
-          /usr/bin/podman build --arch aarch64 --no-cache --tag act-runner:dev --file Containerfile .
+          /usr/bin/podman build --arch aarch64 --no-cache --tag act-runner:dev \
+            --file Containerfile .
 
 
       - name: Push Container Image to Registry(docker.io)
         run: |
-          /usr/bin/podman tag homepage:dev "docker.io/${{ secrets.DOCKERIO_REGISTRY }}/act-runner:dev"
-          /usr/bin/podman push "docker.io/${{ secrets.DOCKERIO_REGISTRY }}/act-runner:dev"
+          /usr/bin/podman tag homepage:dev \
+            "docker.io/${{ secrets.DOCKERIO_REGISTRY }}/act-runner:dev"
+          /usr/bin/podman push \
+            "docker.io/${{ secrets.DOCKERIO_REGISTRY }}/act-runner:dev"
