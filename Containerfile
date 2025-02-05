@@ -1,3 +1,4 @@
+ARG ALPINE_VERSION=3.21.2
 FROM golang:1.23-alpine AS src
 RUN apk add --no-cache make git
 
@@ -11,8 +12,7 @@ WORKDIR /opt/src/act_runner
 RUN make clean && make build
 
 
-
-FROM docker.io/gautada/alpine:latest as act_runner
+FROM docker.io/gautada/alpine:$ALPINE_VERSION as act_runner
 
 RUN apk add --no-cache bash kubectl
 
