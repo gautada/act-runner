@@ -17,7 +17,7 @@ jobs:
         uses: super-linter/super-linter@v5
         env:
           # VALIDATE_DOCKERFILE: true
-          HADOLINT_SEVERITY: warning
+          HADOLINT_SEVERITY: error
           # DEFAULT_BRANCH: dev
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # DOCKERFILE_FILE_NAME: Containerfile
