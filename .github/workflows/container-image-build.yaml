@@ -44,7 +44,7 @@ jobs:
 
       - name: Push Container Image to Registry(docker.io)
         run: |
-          /usr/bin/podman tag homepage:dev \
+          /usr/bin/podman tag act-runner:dev \
             "docker.io/${{ secrets.DOCKERIO_REGISTRY }}/act-runner:dev"
           /usr/bin/podman push \
             "docker.io/${{ secrets.DOCKERIO_REGISTRY }}/act-runner:dev"
