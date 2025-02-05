@@ -1,0 +1,4 @@
+#!/bin/ash
+. /etc/container/entrypoint
+container_version
+
