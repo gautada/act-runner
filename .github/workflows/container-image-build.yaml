@@ -32,7 +32,8 @@ jobs:
       - name: Repository registry login
         run: |
           echo "${{ secrets.DOCKERIO_TOKEN }}" | /usr/bin/podman login \
-            --username "${{ secrets.DOCKERIO_REGISTRY }}" --password-stdin docker.io
+            --username "${{ secrets.DOCKERIO_REGISTRY }}" \
+            --password-stdin docker.io
 
       - name: Build Container Image for aarch64 using Podman
         run: |
