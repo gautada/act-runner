@@ -2,24 +2,13 @@ FROM golang:1.23-alpine AS src
 RUN apk add --no-cache make git
 
 WORKDIR /
-RUN git config --global advice.detachedHead false
-RUN git clone --branch v0.2.11 https://gitea.com/gitea/act_runner.git
-RUN mkdir -p /opt/src
-RUN mv /act_runner /opt/src/
+RUN git config --global advice.detachedHead false \
+ && git clone --branch v0.2.11 https://gitea.com/gitea/act_runner.git \
+ && mkdir -p /opt/src \
+ && mv /act_runner /opt/src/
 
-# Do not remove `git` here, it is required for getting runner version when executing `make build`
-
-# ARG GOPROXY
-# ENV GOPROXY=${GOPROXY:-}
-
-# COPY . /opt/src/act_runner
 WORKDIR /opt/src/act_runner
-
 RUN make clean && make build
-
-
-
-
 
 
 
