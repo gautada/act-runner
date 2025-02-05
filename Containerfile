@@ -22,3 +22,17 @@ RUN chmod +x /usr/bin/run.sh
 COPY entrypoint /etc/container/entrypoint
 COPY container-version /usr/bin/container-version
 # COPY container-entrypoint /usr/bin/container-entrypoint
+
+ARG USER=actr
+RUN /usr/sbin/usermod -l $USER alpine
+RUN /usr/sbin/usermod -d /home/$USER -m $USER
+RUN /usr/sbin/groupmod -n $USER alpine
+
+USER $USER
+VOLUME /mnt/volumes/backup
+VOLUME /mnt/volumes/configmaps
+VOLUME /mnt/volumes/container
+VOLUME /mnt/volumes/secrets
+VOLUME /mnt/volumes/source
+
+WORKDIR /home/$USER
