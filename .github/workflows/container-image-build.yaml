@@ -1,5 +1,5 @@
 ---
-name: Github Action - `dev` branch container build and integrate to `docker.io` repository 
+name: `dev` branch container build and integrate to `docker.io` repository 
 
 on:
   push:
@@ -36,8 +36,8 @@ jobs:
 
       - name: Build Container Image for aarch64 using Podman
         run: |
-          /usr/bin/podman build --arch aarch64 --no-cache --tag act-runner:dev \
-            --file Containerfile .
+          /usr/bin/podman build --arch aarch64 --no-cache \
+            --tag act-runner:dev --file Containerfile .
 
 
       - name: Push Container Image to Registry(docker.io)
