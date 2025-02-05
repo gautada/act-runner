@@ -14,5 +14,10 @@ container_version() {
 }
 
 container_entrypoint() {
-  /usr/bin/run.sh
+  act_runner register --no-interactive \
+   --instance $ACTRUNNER_INSTANCE \
+   --token $ACTRUNNER_TOKEN \
+   --labels $ACTRUNNER_LABELS
+  
+  ~/run.sh
 }

@@ -16,17 +16,18 @@ FROM docker.io/gautada/alpine:$ALPINE_VERSION as act_runner
 
 RUN apk add --no-cache bash kubectl
 
+ARG USER=actr
+RUN /usr/sbin/usermod -l $USER alpine \
+ && /usr/sbin/usermod -d /home/$USER -m $USER \
+ && /usr/sbin/groupmod -n $USER alpine
+
 COPY --from=src /opt/src/act_runner/act_runner /usr/bin/act_runner
-COPY --from=src /opt/src/act_runner/scripts/run.sh /usr/bin/run.sh
-RUN chmod +x /usr/bin/run.sh
+COPY --from=src /opt/src/act_runner/scripts/run.sh /home/$USER/run.sh
+RUN chmod +x /home/$USER/run.sh
 COPY entrypoint /etc/container/entrypoint
 COPY container-version /usr/bin/container-version
-# COPY container-entrypoint /usr/bin/container-entrypoint
-
-ARG USER=actr
-RUN /usr/sbin/usermod -l $USER alpine
-RUN /usr/sbin/usermod -d /home/$USER -m $USER
-RUN /usr/sbin/groupmod -n $USER alpine
+RUN mkdir /data \
+ && chown $USER:$USER -R /data
 
 USER $USER
 VOLUME /mnt/volumes/backup
