@@ -21,3 +21,11 @@ container_entrypoint() {
   
   ~/run.sh
 }
+
+remove() {
+    # ./config.sh remove --unattended --token "${RUNNER_TOKEN}"
+    act_runner remove --unattended
+}
+
+trap 'remove; exit 130' INT
+trap 'remove; exit 143' TERM
